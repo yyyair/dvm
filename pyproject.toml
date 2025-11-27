@@ -4,4 +4,12 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pydantic>=2.12.4",
+    "structlog>=25.5.0",
+    "typer>=0.20.0",
+    "xdg-base-dirs>=6.0.2",
+]
+
+[project.scripts]
+dvm = "dvm.cli:run_app"

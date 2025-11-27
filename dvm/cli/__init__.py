@@ -1,0 +1,1 @@
+from dvm.cli.app import run_app
