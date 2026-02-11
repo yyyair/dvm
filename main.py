@@ -1,4 +1,3 @@
-from xdg_base_dirs import xdg_data_home
 from dvm.cli.app import run_app
 
 

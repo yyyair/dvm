@@ -3,7 +3,13 @@ import pathlib
 from typer import Typer
 
 from dvm.core.config import Config
-from dvm.core.file_tracker import track_new_file, set_handler, open_tracked_file, remove_tracked_file, update_all_files
+from dvm.core.file_tracker import (
+    track_new_file,
+    set_handler,
+    open_tracked_file,
+    remove_tracked_file,
+    update_all_files,
+)
 from dvm.core.files import FileType
 
 app = Typer()

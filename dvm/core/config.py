@@ -3,7 +3,6 @@ import os
 
 import xdg_base_dirs
 from pydantic import BaseModel
-import enum
 import pathlib
 
 from dvm.core.files import FileHandler, File

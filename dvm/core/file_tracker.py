@@ -30,7 +30,9 @@ class NoFileHandler(Exception):
 class MultipleFileError(Exception):
     pass
 
+
 logger = get_logger("file-tracker")
+
 
 def get_cache_base() -> pathlib.Path:
     return xdg_base_dirs.xdg_data_home() / "dvm"
@@ -87,6 +89,7 @@ def track_new_file(
     config.tracked_files.append(file)
     config.save_to_disk()
 
+
 def delete_file_cache(file: File) -> None:
     for metadata_file in glob.glob(f"{file.cached_path}*"):
         os.remove(metadata_file)
@@ -99,6 +102,7 @@ def remove_tracked_file(name: str) -> None:
     config.tracked_files.remove(file)
     config.save_to_disk()
 
+
 def update_tracked_file(name: str) -> None:
     config = Config.load_from_disk()
     file = find_file_by_regex(name, config.tracked_files)
@@ -107,10 +111,12 @@ def update_tracked_file(name: str) -> None:
     delete_file_cache(file)
     shutil.copy(file.original_path, file.cached_path)
 
+
 def update_all_files() -> None:
     config = Config.load_from_disk()
     for file in config.tracked_files:
         update_tracked_file(file.name)
+
 
 def open_tracked_file(name: str) -> None:
     config = Config.load_from_disk()
