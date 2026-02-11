@@ -3,6 +3,8 @@ import pathlib
 import re
 import shutil
 import subprocess
+
+import iterfzf
 from structlog import get_logger
 import xdg_base_dirs
 
@@ -38,11 +40,18 @@ def get_cache_base() -> pathlib.Path:
     return xdg_base_dirs.xdg_data_home() / "dvm"
 
 
-def find_file_by_regex(name_regex: str, files: list[File]) -> File:
+def find_file_by_regex(
+    name_regex: str, files: list[File], allow_prompt: bool = True
+) -> File:
     matches = [file for file in files if len(re.findall(name_regex, file.name)) > 0]
     if len(matches) == 0:
         raise FileNotFound(f"File {name_regex} not found")
     elif len(matches) > 1:
+        if allow_prompt:
+            original_path = iterfzf.iterfzf([str(m.original_path) for m in matches])
+            for match in matches:
+                if str(match.original_path) == original_path:
+                    return match
         raise MultipleFileError()
     else:
         return matches[0]
