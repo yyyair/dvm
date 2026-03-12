@@ -40,6 +40,10 @@ class File(BaseModel):
             self.cached_path
         )
 
+    @property
+    def cached_hash(self) -> str:
+        return calculate_file_hash(self.cached_path)
+
 
 class FileHandler(BaseModel):
     supported_types: list[FileType]

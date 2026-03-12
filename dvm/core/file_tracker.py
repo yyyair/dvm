@@ -112,9 +112,8 @@ def remove_tracked_file(name: str) -> None:
     config.save_to_disk()
 
 
-def update_tracked_file(name: str) -> None:
+def update_tracked_file(file: File) -> None:
     config = Config.load_from_disk()
-    file = find_file_by_regex(name, config.tracked_files)
     if not file.is_stale:
         return
     delete_file_cache(file)
@@ -124,7 +123,7 @@ def update_tracked_file(name: str) -> None:
 def update_all_files() -> None:
     config = Config.load_from_disk()
     for file in config.tracked_files:
-        update_tracked_file(file.name)
+        update_tracked_file(file)
 
 
 def open_tracked_file(name: str) -> None:
@@ -150,3 +149,12 @@ def set_handler(executable_path: pathlib.Path, for_type: FileType) -> None:
     if executable_path != handler.executable_path:
         handler.executable_path = executable_path
     config.save_to_disk()
+
+def show_file_info(name: str) -> None:
+    config = Config.load_from_disk()
+    file = find_file_by_regex(name, config.tracked_files)
+    stale = file.is_stale
+    file_hash = file.cached_hash
+    print(f"[+] Name: {file.name}")
+    print(f"[+] Path: \"{file.original_path}\"")
+    print(f"[+] Status: {'Stale' if stale else 'Up to date'} ({file_hash})")

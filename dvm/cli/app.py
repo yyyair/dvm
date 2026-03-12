@@ -8,7 +8,7 @@ from dvm.core.file_tracker import (
     set_handler,
     open_tracked_file,
     remove_tracked_file,
-    update_all_files,
+    update_all_files, show_file_info,
 )
 from dvm.core.files import FileType
 
@@ -46,6 +46,9 @@ def open_file(name: str) -> None:
 def add_file_handler(path: pathlib.Path, type: FileType) -> None:
     set_handler(path, type)
 
+@app.command(name='info')
+def print_file_info(name: str) -> None:
+    show_file_info(name)
 
 def run_app() -> None:
     app()
